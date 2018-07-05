@@ -1,0 +1,2786 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": "-- Grafana --",
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "description": "",
+  "editable": true,
+  "gnetId": null,
+  "graphTooltip": 0,
+  "hideControls": false,
+  "id": 11,
+  "links": [],
+  "refresh": "10s",
+  "rows": [
+    {
+      "collapse": false,
+      "height": "200",
+      "panels": [
+        {
+          "aliasColors": {
+            "200s": "#508642",
+            "400s": "#ef843c"
+          },
+          "bars": false,
+          "dashLength": 10,
+          "dashes": false,
+          "datasource": "$tomee_region",
+          "fill": 0,
+          "id": 13,
+          "legend": {
+            "avg": false,
+            "current": false,
+            "max": false,
+            "min": false,
+            "show": true,
+            "total": false,
+            "values": false
+          },
+          "lines": true,
+          "linewidth": 1,
+          "links": [
+            {
+              "dashUri": "db/lcs-application-metrics",
+              "dashboard": "LCS Application Metrics",
+              "includeVars": true,
+              "params": "var-lcs_type=core-data&orgId=2",
+              "targetBlank": true,
+              "title": "LCS Application Metrics",
+              "type": "dashboard"
+            }
+          ],
+          "nullPointMode": "null",
+          "percentage": false,
+          "pointradius": 5,
+          "points": false,
+          "renderer": "flot",
+          "seriesOverrides": [],
+          "spaceLength": 10,
+          "span": 4,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "alias": "200s",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "10s"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "host"
+                  ],
+                  "type": "tag"
+                }
+              ],
+              "measurement": "tomee_access_log_tomee",
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT count(\"host\") FROM \"tomee_access_log_tomee\" WHERE (\"response_code\" >= 200 AND \"response_code\" < 300) AND (\"aarp_env\" =~ /^$aarp_env$/ AND \"aarp_role\" =~ /^ws(_appsec)?$/ AND \"host\"::field =~ /^$secure_aarp_org$/) AND $timeFilter GROUP BY time(10s) fill(0)",
+              "rawQuery": true,
+              "refId": "A",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "uripath"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "count"
+                  }
+                ]
+              ],
+              "tags": [
+                {
+                  "key": "aarp_env",
+                  "operator": "=~",
+                  "value": "/^$aarp_env$/"
+                },
+                {
+                  "condition": "AND",
+                  "key": "lcs_type",
+                  "operator": "=~",
+                  "value": "/^$lcs_type$/"
+                }
+              ]
+            },
+            {
+              "alias": "300s",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT count(\"host\") FROM \"tomee_access_log_tomee\" WHERE (\"response_code\" >= 300 AND \"response_code\" < 400) AND (\"aarp_env\" =~ /^$aarp_env$/ AND \"aarp_role\" =~ /^ws(_appsec)?$/ AND \"host\"::field =~ /^$secure_aarp_org$/) AND $timeFilter GROUP BY time(10s) fill(0)",
+              "rawQuery": true,
+              "refId": "B",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            },
+            {
+              "alias": "400s",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT count(\"host\") FROM \"tomee_access_log_tomee\" WHERE (\"response_code\" >= 400 AND \"response_code\" < 500) AND (\"aarp_env\" =~ /^$aarp_env$/ AND \"aarp_role\" =~ /^ws(_appsec)?$/ AND \"host\"::field =~ /^$secure_aarp_org$/) AND $timeFilter GROUP BY time(10s) fill(0)",
+              "rawQuery": true,
+              "refId": "C",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            },
+            {
+              "alias": "500s",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT count(\"host\") FROM \"tomee_access_log_tomee\" WHERE (\"response_code\" >= 500 AND \"response_code\" < 600) AND (\"aarp_env\" =~ /^$aarp_env$/ AND \"aarp_role\" =~ /^ws(_appsec)?$/ AND \"host\"::field =~ /^$secure_aarp_org$/) AND $timeFilter GROUP BY time(10s) fill(0)",
+              "rawQuery": true,
+              "refId": "D",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            }
+          ],
+          "thresholds": [],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "TomEE - 200s/300s/400s/500s",
+          "tooltip": {
+            "shared": true,
+            "sort": 0,
+            "value_type": "individual"
+          },
+          "type": "graph",
+          "xaxis": {
+            "buckets": null,
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": []
+          },
+          "yaxes": [
+            {
+              "format": "short",
+              "label": "10s Interval",
+              "logBase": 1,
+              "max": null,
+              "min": "0",
+              "show": true
+            },
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            }
+          ]
+        },
+        {
+          "aliasColors": {
+            "AppLB avg": "#d683ce",
+            "TomEE avg": "#65c5db",
+            "avg": "#65c5db",
+            "tomee_access_log_tomee.mean": "#65c5db"
+          },
+          "bars": false,
+          "dashLength": 10,
+          "dashes": false,
+          "datasource": "$apache_region",
+          "fill": 0,
+          "id": 16,
+          "legend": {
+            "avg": false,
+            "current": false,
+            "max": false,
+            "min": false,
+            "show": true,
+            "total": false,
+            "values": false
+          },
+          "lines": true,
+          "linewidth": 1,
+          "links": [],
+          "nullPointMode": "null",
+          "percentage": false,
+          "pointradius": 5,
+          "points": false,
+          "renderer": "flot",
+          "seriesOverrides": [],
+          "spaceLength": 10,
+          "span": 4,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "alias": "200s",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT count(\"uripath\") FROM \"apache_access_log_apache\" WHERE (\"response_code\" >= 200 AND \"response_code\" < 300) AND (\"aarp_env\" =~ /^$aarp_env$/ AND \"aarp_role\" =~ /^ws(_appsec)?$/ AND \"domain\" =~ /^$secure_aarp_org$/) AND $timeFilter GROUP BY time(10s) fill(0)",
+              "rawQuery": true,
+              "refId": "A",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            },
+            {
+              "alias": "300s",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT count(\"uripath\") FROM \"apache_access_log_apache\" WHERE (\"response_code\" >= 300 AND \"response_code\" < 400) AND (\"aarp_env\" =~ /^$aarp_env$/ AND \"aarp_role\" =~ /^ws(_appsec)?$/ AND \"domain\" =~ /^$secure_aarp_org$/) AND $timeFilter GROUP BY time(10s) fill(0)",
+              "rawQuery": true,
+              "refId": "B",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            },
+            {
+              "alias": "400s",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT count(\"uripath\") FROM \"apache_access_log_apache\" WHERE (\"response_code\" >= 400 AND \"response_code\" < 500) AND (\"aarp_env\" =~ /^$aarp_env$/ AND \"aarp_role\" =~ /^ws(_appsec)?$/ AND \"domain\" =~ /^$secure_aarp_org$/) AND $timeFilter GROUP BY time(10s) fill(0)",
+              "rawQuery": true,
+              "refId": "C",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            },
+            {
+              "alias": "500s",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT count(\"uripath\") FROM \"apache_access_log_apache\" WHERE (\"response_code\" >= 500 AND \"response_code\" < 600) AND (\"aarp_env\" =~ /^$aarp_env$/ AND \"aarp_role\" =~ /^ws(_appsec)?$/ AND \"domain\" =~ /^$secure_aarp_org$/) AND $timeFilter GROUP BY time(10s) fill(0)",
+              "rawQuery": true,
+              "refId": "D",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            }
+          ],
+          "thresholds": [],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "Apache - 200s/300s/400s/500s",
+          "tooltip": {
+            "shared": true,
+            "sort": 0,
+            "value_type": "individual"
+          },
+          "type": "graph",
+          "xaxis": {
+            "buckets": null,
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": []
+          },
+          "yaxes": [
+            {
+              "format": "short",
+              "label": "10s interval",
+              "logBase": 1,
+              "max": null,
+              "min": "0",
+              "show": true
+            },
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            }
+          ]
+        },
+        {
+          "aliasColors": {
+            "AppLB avg": "#d683ce",
+            "TomEE avg": "#65c5db",
+            "avg": "#65c5db",
+            "tomee_access_log_tomee.mean": "#65c5db"
+          },
+          "bars": false,
+          "dashLength": 10,
+          "dashes": false,
+          "datasource": "-- Mixed --",
+          "fill": 0,
+          "id": 33,
+          "legend": {
+            "avg": false,
+            "current": false,
+            "max": false,
+            "min": false,
+            "show": true,
+            "total": false,
+            "values": false
+          },
+          "lines": true,
+          "linewidth": 1,
+          "links": [],
+          "nullPointMode": "null",
+          "percentage": false,
+          "pointradius": 5,
+          "points": false,
+          "renderer": "flot",
+          "seriesOverrides": [],
+          "spaceLength": 10,
+          "span": 4,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "alias": "TomEE avg",
+              "datasource": "$tomee_region",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT mean(\"response_time_milliseconds\") FROM \"tomee_access_log_tomee\" WHERE (\"aarp_env\" =~ /^$aarp_env$/ AND \"aarp_role\" =~ /^ws(_appsec)?$/ AND \"host\"::field =~ /^$secure_aarp_org$/) AND $timeFilter GROUP BY time(10s)",
+              "rawQuery": true,
+              "refId": "B",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            },
+            {
+              "alias": "Apache avg",
+              "datasource": "$apache_region",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT mean(\"response_time_microseconds\")/1000 FROM \"apache_access_log_apache\" WHERE (\"aarp_env\" =~ /^$aarp_env$/ AND \"aarp_role\" =~ /^ws(_appsec)?$/ AND \"domain\" =~ /^$secure_aarp_org$/) AND $timeFilter GROUP BY time(10s)",
+              "rawQuery": true,
+              "refId": "A",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            }
+          ],
+          "thresholds": [],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "Response Time",
+          "tooltip": {
+            "shared": true,
+            "sort": 0,
+            "value_type": "individual"
+          },
+          "type": "graph",
+          "xaxis": {
+            "buckets": null,
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": []
+          },
+          "yaxes": [
+            {
+              "format": "short",
+              "label": "Milliseconds",
+              "logBase": 1,
+              "max": null,
+              "min": "0",
+              "show": true
+            },
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            }
+          ]
+        }
+      ],
+      "repeat": null,
+      "repeatIteration": null,
+      "repeatRowId": null,
+      "showTitle": true,
+      "title": "secure.aarp.org",
+      "titleSize": "h6"
+    },
+    {
+      "collapse": false,
+      "height": "200",
+      "panels": [
+        {
+          "aliasColors": {
+            "200s": "#508642",
+            "400s": "#ef843c"
+          },
+          "bars": false,
+          "dashLength": 10,
+          "dashes": false,
+          "datasource": "$tomee_region",
+          "fill": 0,
+          "id": 13,
+          "legend": {
+            "avg": false,
+            "current": false,
+            "max": false,
+            "min": false,
+            "show": true,
+            "total": false,
+            "values": false
+          },
+          "lines": true,
+          "linewidth": 1,
+          "links": [
+            {
+              "dashUri": "db/lcs-application-metrics",
+              "dashboard": "LCS Application Metrics",
+              "includeVars": true,
+              "params": "var-lcs_type=core-data&orgId=2",
+              "targetBlank": true,
+              "title": "LCS Application Metrics",
+              "type": "dashboard"
+            }
+          ],
+          "nullPointMode": "null",
+          "percentage": false,
+          "pointradius": 5,
+          "points": false,
+          "renderer": "flot",
+          "seriesOverrides": [],
+          "spaceLength": 10,
+          "span": 4,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "alias": "200s",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "10s"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "host"
+                  ],
+                  "type": "tag"
+                }
+              ],
+              "measurement": "tomee_access_log_tomee",
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT count(\"host\") FROM \"tomee_access_log_tomee\" WHERE (\"response_code\" >= 200 AND \"response_code\" < 300) AND (\"aarp_env\" =~ /^$aarp_env$/ AND \"aarp_role\" =~ /^ws(_appsec)?$/ AND \"host\"::field =~ /^$www_aarp_org$/) AND $timeFilter GROUP BY time(10s) fill(0)",
+              "rawQuery": true,
+              "refId": "A",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "uripath"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "count"
+                  }
+                ]
+              ],
+              "tags": [
+                {
+                  "key": "aarp_env",
+                  "operator": "=~",
+                  "value": "/^$aarp_env$/"
+                },
+                {
+                  "condition": "AND",
+                  "key": "lcs_type",
+                  "operator": "=~",
+                  "value": "/^$lcs_type$/"
+                }
+              ]
+            },
+            {
+              "alias": "300s",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT count(\"host\") FROM \"tomee_access_log_tomee\" WHERE (\"response_code\" >= 300 AND \"response_code\" < 400) AND (\"aarp_env\" =~ /^$aarp_env$/ AND \"aarp_role\" =~ /^ws(_appsec)?$/ AND \"host\"::field =~ /^$www_aarp_org$/) AND $timeFilter GROUP BY time(10s) fill(0)",
+              "rawQuery": true,
+              "refId": "B",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            },
+            {
+              "alias": "400s",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT count(\"host\") FROM \"tomee_access_log_tomee\" WHERE (\"response_code\" >= 400 AND \"response_code\" < 500) AND (\"aarp_env\" =~ /^$aarp_env$/ AND \"aarp_role\" =~ /^ws(_appsec)?$/ AND \"host\"::field =~ /^$www_aarp_org$/) AND $timeFilter GROUP BY time(10s) fill(0)",
+              "rawQuery": true,
+              "refId": "C",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            },
+            {
+              "alias": "500s",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT count(\"host\") FROM \"tomee_access_log_tomee\" WHERE (\"response_code\" >= 500 AND \"response_code\" < 600) AND (\"aarp_env\" =~ /^$aarp_env$/ AND \"aarp_role\" =~ /^ws(_appsec)?$/ AND \"host\"::field =~ /^$www_aarp_org$/) AND $timeFilter GROUP BY time(10s) fill(0)",
+              "rawQuery": true,
+              "refId": "D",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            }
+          ],
+          "thresholds": [],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "TomEE - 200s/300s/400s/500s",
+          "tooltip": {
+            "shared": true,
+            "sort": 0,
+            "value_type": "individual"
+          },
+          "type": "graph",
+          "xaxis": {
+            "buckets": null,
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": []
+          },
+          "yaxes": [
+            {
+              "format": "short",
+              "label": "10s Interval",
+              "logBase": 1,
+              "max": null,
+              "min": "0",
+              "show": true
+            },
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            }
+          ]
+        },
+        {
+          "aliasColors": {
+            "AppLB avg": "#d683ce",
+            "TomEE avg": "#65c5db",
+            "avg": "#65c5db",
+            "tomee_access_log_tomee.mean": "#65c5db"
+          },
+          "bars": false,
+          "dashLength": 10,
+          "dashes": false,
+          "datasource": "$apache_region",
+          "fill": 0,
+          "id": 16,
+          "legend": {
+            "avg": false,
+            "current": false,
+            "max": false,
+            "min": false,
+            "show": true,
+            "total": false,
+            "values": false
+          },
+          "lines": true,
+          "linewidth": 1,
+          "links": [],
+          "nullPointMode": "null",
+          "percentage": false,
+          "pointradius": 5,
+          "points": false,
+          "renderer": "flot",
+          "seriesOverrides": [],
+          "spaceLength": 10,
+          "span": 4,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "alias": "200s",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT count(\"uripath\") FROM \"apache_access_log_apache\" WHERE (\"response_code\" >= 200 AND \"response_code\" < 300) AND (\"aarp_env\" =~ /^$aarp_env$/ AND \"aarp_role\" =~ /^ws(_appsec)?$/ AND \"domain\" =~ /^$www_aarp_org$/) AND $timeFilter GROUP BY time(10s) fill(0)",
+              "rawQuery": true,
+              "refId": "A",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            },
+            {
+              "alias": "300s",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT count(\"uripath\") FROM \"apache_access_log_apache\" WHERE (\"response_code\" >= 300 AND \"response_code\" < 400) AND (\"aarp_env\" =~ /^$aarp_env$/ AND \"aarp_role\" =~ /^ws(_appsec)?$/ AND \"domain\" =~ /^$www_aarp_org$/) AND $timeFilter GROUP BY time(10s) fill(0)",
+              "rawQuery": true,
+              "refId": "B",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            },
+            {
+              "alias": "400s",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT count(\"uripath\") FROM \"apache_access_log_apache\" WHERE (\"response_code\" >= 400 AND \"response_code\" < 500) AND (\"aarp_env\" =~ /^$aarp_env$/ AND \"aarp_role\" =~ /^ws(_appsec)?$/ AND \"domain\" =~ /^$www_aarp_org$/) AND $timeFilter GROUP BY time(10s) fill(0)",
+              "rawQuery": true,
+              "refId": "C",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            },
+            {
+              "alias": "500s",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT count(\"uripath\") FROM \"apache_access_log_apache\" WHERE (\"response_code\" >= 500 AND \"response_code\" < 600) AND (\"aarp_env\" =~ /^$aarp_env$/ AND \"aarp_role\" =~ /^ws(_appsec)?$/ AND \"domain\" =~ /^$www_aarp_org$/) AND $timeFilter GROUP BY time(10s) fill(0)",
+              "rawQuery": true,
+              "refId": "D",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            }
+          ],
+          "thresholds": [],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "Apache - 200s/300s/400s/500s",
+          "tooltip": {
+            "shared": true,
+            "sort": 0,
+            "value_type": "individual"
+          },
+          "type": "graph",
+          "xaxis": {
+            "buckets": null,
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": []
+          },
+          "yaxes": [
+            {
+              "format": "short",
+              "label": "10s interval",
+              "logBase": 1,
+              "max": null,
+              "min": "0",
+              "show": true
+            },
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            }
+          ]
+        },
+        {
+          "aliasColors": {
+            "AppLB avg": "#d683ce",
+            "TomEE avg": "#65c5db",
+            "avg": "#65c5db",
+            "tomee_access_log_tomee.mean": "#65c5db"
+          },
+          "bars": false,
+          "dashLength": 10,
+          "dashes": false,
+          "datasource": "-- Mixed --",
+          "fill": 0,
+          "id": 33,
+          "legend": {
+            "avg": false,
+            "current": false,
+            "max": false,
+            "min": false,
+            "show": true,
+            "total": false,
+            "values": false
+          },
+          "lines": true,
+          "linewidth": 1,
+          "links": [],
+          "nullPointMode": "null",
+          "percentage": false,
+          "pointradius": 5,
+          "points": false,
+          "renderer": "flot",
+          "seriesOverrides": [],
+          "spaceLength": 10,
+          "span": 4,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "alias": "TomEE avg",
+              "datasource": "$tomee_region",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT mean(\"response_time_milliseconds\") FROM \"tomee_access_log_tomee\" WHERE (\"aarp_env\" =~ /^$aarp_env$/ AND \"aarp_role\" =~ /^ws(_appsec)?$/ AND \"host\"::field =~ /^$www_aarp_org$/) AND $timeFilter GROUP BY time(10s)",
+              "rawQuery": true,
+              "refId": "B",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            },
+            {
+              "alias": "Apache avg",
+              "datasource": "$apache_region",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT mean(\"response_time_microseconds\")/1000 FROM \"apache_access_log_apache\" WHERE (\"aarp_env\" =~ /^$aarp_env$/ AND \"aarp_role\" =~ /^ws(_appsec)?$/ AND \"domain\" =~ /^$www_aarp_org$/) AND $timeFilter GROUP BY time(10s)",
+              "rawQuery": true,
+              "refId": "A",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            }
+          ],
+          "thresholds": [],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "Response Time",
+          "tooltip": {
+            "shared": true,
+            "sort": 0,
+            "value_type": "individual"
+          },
+          "type": "graph",
+          "xaxis": {
+            "buckets": null,
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": []
+          },
+          "yaxes": [
+            {
+              "format": "short",
+              "label": "Milliseconds",
+              "logBase": 1,
+              "max": null,
+              "min": "0",
+              "show": true
+            },
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            }
+          ]
+        }
+      ],
+      "repeat": null,
+      "repeatIteration": null,
+      "repeatRowId": null,
+      "showTitle": true,
+      "title": "www.aarp.org",
+      "titleSize": "h6"
+    },
+    {
+      "collapse": false,
+      "height": "200",
+      "panels": [
+        {
+          "aliasColors": {
+            "200s": "#508642",
+            "400s": "#ef843c"
+          },
+          "bars": false,
+          "dashLength": 10,
+          "dashes": false,
+          "datasource": "$tomee_region",
+          "fill": 0,
+          "id": 13,
+          "legend": {
+            "avg": false,
+            "current": false,
+            "max": false,
+            "min": false,
+            "show": true,
+            "total": false,
+            "values": false
+          },
+          "lines": true,
+          "linewidth": 1,
+          "links": [
+            {
+              "dashUri": "db/lcs-application-metrics",
+              "dashboard": "LCS Application Metrics",
+              "includeVars": true,
+              "params": "var-lcs_type=core-data&orgId=2",
+              "targetBlank": true,
+              "title": "LCS Application Metrics",
+              "type": "dashboard"
+            }
+          ],
+          "nullPointMode": "null",
+          "percentage": false,
+          "pointradius": 5,
+          "points": false,
+          "renderer": "flot",
+          "seriesOverrides": [],
+          "spaceLength": 10,
+          "span": 4,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "alias": "200s",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "10s"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "host"
+                  ],
+                  "type": "tag"
+                }
+              ],
+              "measurement": "tomee_access_log_tomee",
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT count(\"host\") FROM \"tomee_access_log_tomee\" WHERE (\"response_code\" >= 200 AND \"response_code\" < 300) AND (\"aarp_env\" =~ /^$aarp_env$/ AND \"lcs_type\" = 'user-mgmt') AND $timeFilter GROUP BY time(10s) fill(0)",
+              "rawQuery": true,
+              "refId": "A",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "uripath"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "count"
+                  }
+                ]
+              ],
+              "tags": [
+                {
+                  "key": "aarp_env",
+                  "operator": "=~",
+                  "value": "/^$aarp_env$/"
+                },
+                {
+                  "condition": "AND",
+                  "key": "lcs_type",
+                  "operator": "=~",
+                  "value": "/^$lcs_type$/"
+                }
+              ]
+            },
+            {
+              "alias": "300s",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT count(\"host\") FROM \"tomee_access_log_tomee\" WHERE (\"response_code\" >= 300 AND \"response_code\" < 400) AND (\"aarp_env\" =~ /^$aarp_env$/ AND \"lcs_type\" = 'user-mgmt') AND $timeFilter GROUP BY time(10s) fill(0)",
+              "rawQuery": true,
+              "refId": "B",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            },
+            {
+              "alias": "400s",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT count(\"host\") FROM \"tomee_access_log_tomee\" WHERE (\"response_code\" >= 400 AND \"response_code\" < 500) AND (\"aarp_env\" =~ /^$aarp_env$/ AND \"lcs_type\" = 'user-mgmt') AND $timeFilter GROUP BY time(10s) fill(0)",
+              "rawQuery": true,
+              "refId": "C",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            },
+            {
+              "alias": "500s",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT count(\"host\") FROM \"tomee_access_log_tomee\" WHERE (\"response_code\" >= 500 AND \"response_code\" < 600) AND (\"aarp_env\" =~ /^$aarp_env$/ AND \"lcs_type\" = 'user-mgmt') AND $timeFilter GROUP BY time(10s) fill(0)",
+              "rawQuery": true,
+              "refId": "D",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            }
+          ],
+          "thresholds": [],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "TomEE - 200s/300s/400s/500s",
+          "tooltip": {
+            "shared": true,
+            "sort": 0,
+            "value_type": "individual"
+          },
+          "type": "graph",
+          "xaxis": {
+            "buckets": null,
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": []
+          },
+          "yaxes": [
+            {
+              "format": "short",
+              "label": "10s Interval",
+              "logBase": 1,
+              "max": null,
+              "min": "0",
+              "show": true
+            },
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            }
+          ]
+        },
+        {
+          "aliasColors": {
+            "AppLB avg": "#d683ce",
+            "TomEE avg": "#65c5db",
+            "avg": "#65c5db",
+            "tomee_access_log_tomee.mean": "#65c5db"
+          },
+          "bars": false,
+          "dashLength": 10,
+          "dashes": false,
+          "datasource": "$apache_region",
+          "fill": 0,
+          "id": 16,
+          "legend": {
+            "avg": false,
+            "current": false,
+            "max": false,
+            "min": false,
+            "show": true,
+            "total": false,
+            "values": false
+          },
+          "lines": true,
+          "linewidth": 1,
+          "links": [],
+          "nullPointMode": "null",
+          "percentage": false,
+          "pointradius": 5,
+          "points": false,
+          "renderer": "flot",
+          "seriesOverrides": [],
+          "spaceLength": 10,
+          "span": 4,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "alias": "200s",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT count(\"uripath\") FROM \"apache_access_log_apache\" WHERE (\"response_code\" >= 200 AND \"response_code\" < 300) AND (\"aarp_env\" =~ /^$aarp_env$/ AND \"aarp_role\" =~ /^ws(_appsec)?$/ AND \"domain\" =~ /^$login_aarp_org$/) AND $timeFilter GROUP BY time(10s) fill(0)",
+              "rawQuery": true,
+              "refId": "A",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            },
+            {
+              "alias": "300s",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT count(\"uripath\") FROM \"apache_access_log_apache\" WHERE (\"response_code\" >= 300 AND \"response_code\" < 400) AND (\"aarp_env\" =~ /^$aarp_env$/ AND \"aarp_role\" =~ /^ws(_appsec)?$/ AND \"domain\" =~ /^$login_aarp_org$/) AND $timeFilter GROUP BY time(10s) fill(0)",
+              "rawQuery": true,
+              "refId": "B",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            },
+            {
+              "alias": "400s",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT count(\"uripath\") FROM \"apache_access_log_apache\" WHERE (\"response_code\" >= 400 AND \"response_code\" < 500) AND (\"aarp_env\" =~ /^$aarp_env$/ AND \"aarp_role\" =~ /^ws(_appsec)?$/ AND \"domain\" =~ /^$login_aarp_org$/) AND $timeFilter GROUP BY time(10s) fill(0)",
+              "rawQuery": true,
+              "refId": "C",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            },
+            {
+              "alias": "500s",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT count(\"uripath\") FROM \"apache_access_log_apache\" WHERE (\"response_code\" >= 500 AND \"response_code\" < 600) AND (\"aarp_env\" =~ /^$aarp_env$/ AND \"aarp_role\" =~ /^ws(_appsec)?$/ AND \"domain\" =~ /^$login_aarp_org$/) AND $timeFilter GROUP BY time(10s) fill(0)",
+              "rawQuery": true,
+              "refId": "D",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            }
+          ],
+          "thresholds": [],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "Apache - 200s/300s/400s/500s",
+          "tooltip": {
+            "shared": true,
+            "sort": 0,
+            "value_type": "individual"
+          },
+          "type": "graph",
+          "xaxis": {
+            "buckets": null,
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": []
+          },
+          "yaxes": [
+            {
+              "format": "short",
+              "label": "10s interval",
+              "logBase": 1,
+              "max": null,
+              "min": "0",
+              "show": true
+            },
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            }
+          ]
+        },
+        {
+          "aliasColors": {
+            "AppLB avg": "#d683ce",
+            "TomEE avg": "#65c5db",
+            "avg": "#65c5db",
+            "tomee_access_log_tomee.mean": "#65c5db"
+          },
+          "bars": false,
+          "dashLength": 10,
+          "dashes": false,
+          "datasource": "-- Mixed --",
+          "fill": 0,
+          "id": 33,
+          "legend": {
+            "avg": false,
+            "current": false,
+            "max": false,
+            "min": false,
+            "show": true,
+            "total": false,
+            "values": false
+          },
+          "lines": true,
+          "linewidth": 1,
+          "links": [],
+          "nullPointMode": "null",
+          "percentage": false,
+          "pointradius": 5,
+          "points": false,
+          "renderer": "flot",
+          "seriesOverrides": [],
+          "spaceLength": 10,
+          "span": 4,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "alias": "TomEE avg",
+              "datasource": "$tomee_region",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT mean(\"response_time_milliseconds\") FROM \"tomee_access_log_tomee\" WHERE (\"aarp_env\" =~ /^$aarp_env$/ AND \"lcs_type\" = 'user-mgmt') AND $timeFilter GROUP BY time(10s)",
+              "rawQuery": true,
+              "refId": "B",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            },
+            {
+              "alias": "Apache avg",
+              "datasource": "$apache_region",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT mean(\"response_time_microseconds\")/1000 FROM \"apache_access_log_apache\" WHERE (\"aarp_env\" =~ /^$aarp_env$/ AND \"aarp_role\" =~ /^ws(_appsec)?$/ AND \"domain\" =~ /^$login_aarp_org$/) AND $timeFilter GROUP BY time(10s)",
+              "rawQuery": true,
+              "refId": "A",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            }
+          ],
+          "thresholds": [],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "Response Time",
+          "tooltip": {
+            "shared": true,
+            "sort": 0,
+            "value_type": "individual"
+          },
+          "type": "graph",
+          "xaxis": {
+            "buckets": null,
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": []
+          },
+          "yaxes": [
+            {
+              "format": "short",
+              "label": "Milliseconds",
+              "logBase": 1,
+              "max": null,
+              "min": "0",
+              "show": true
+            },
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            }
+          ]
+        }
+      ],
+      "repeat": null,
+      "repeatIteration": null,
+      "repeatRowId": null,
+      "showTitle": true,
+      "title": "login.aarp.org",
+      "titleSize": "h6"
+    },
+    {
+      "collapse": false,
+      "height": "200",
+      "panels": [
+        {
+          "aliasColors": {
+            "200s": "#508642",
+            "400s": "#ef843c"
+          },
+          "bars": false,
+          "dashLength": 10,
+          "dashes": false,
+          "datasource": "$tomee_region",
+          "fill": 0,
+          "id": 13,
+          "legend": {
+            "avg": false,
+            "current": false,
+            "max": false,
+            "min": false,
+            "show": true,
+            "total": false,
+            "values": false
+          },
+          "lines": true,
+          "linewidth": 1,
+          "links": [
+            {
+              "dashUri": "db/lcs-application-metrics",
+              "dashboard": "LCS Application Metrics",
+              "includeVars": true,
+              "params": "var-lcs_type=core-data&orgId=2",
+              "targetBlank": true,
+              "title": "LCS Application Metrics",
+              "type": "dashboard"
+            }
+          ],
+          "nullPointMode": "null",
+          "percentage": false,
+          "pointradius": 5,
+          "points": false,
+          "renderer": "flot",
+          "seriesOverrides": [],
+          "spaceLength": 10,
+          "span": 4,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "alias": "200s",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "10s"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "host"
+                  ],
+                  "type": "tag"
+                }
+              ],
+              "measurement": "tomee_access_log_tomee",
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT count(\"host\") FROM \"tomee_access_log_tomee\" WHERE (\"response_code\" >= 200 AND \"response_code\" < 300) AND (\"aarp_env\" =~ /^$aarp_env$/ AND \"lcs_type\" = 'user-mgmt') AND $timeFilter GROUP BY time(10s) fill(0)",
+              "rawQuery": true,
+              "refId": "A",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "uripath"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "count"
+                  }
+                ]
+              ],
+              "tags": [
+                {
+                  "key": "aarp_env",
+                  "operator": "=~",
+                  "value": "/^$aarp_env$/"
+                },
+                {
+                  "condition": "AND",
+                  "key": "lcs_type",
+                  "operator": "=~",
+                  "value": "/^$lcs_type$/"
+                }
+              ]
+            },
+            {
+              "alias": "300s",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT count(\"host\") FROM \"tomee_access_log_tomee\" WHERE (\"response_code\" >= 300 AND \"response_code\" < 400) AND (\"aarp_env\" =~ /^$aarp_env$/ AND \"lcs_type\" = 'user-mgmt') AND $timeFilter GROUP BY time(10s) fill(0)",
+              "rawQuery": true,
+              "refId": "B",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            },
+            {
+              "alias": "400s",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT count(\"host\") FROM \"tomee_access_log_tomee\" WHERE (\"response_code\" >= 400 AND \"response_code\" < 500) AND (\"aarp_env\" =~ /^$aarp_env$/ AND \"lcs_type\" = 'user-mgmt') AND $timeFilter GROUP BY time(10s) fill(0)",
+              "rawQuery": true,
+              "refId": "C",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            },
+            {
+              "alias": "500s",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT count(\"host\") FROM \"tomee_access_log_tomee\" WHERE (\"response_code\" >= 500 AND \"response_code\" < 600) AND (\"aarp_env\" =~ /^$aarp_env$/ AND \"lcs_type\" = 'user-mgmt') AND $timeFilter GROUP BY time(10s) fill(0)",
+              "rawQuery": true,
+              "refId": "D",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            }
+          ],
+          "thresholds": [],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "TomEE - 200s/300s/400s/500s",
+          "tooltip": {
+            "shared": true,
+            "sort": 0,
+            "value_type": "individual"
+          },
+          "type": "graph",
+          "xaxis": {
+            "buckets": null,
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": []
+          },
+          "yaxes": [
+            {
+              "format": "short",
+              "label": "10s Interval",
+              "logBase": 1,
+              "max": null,
+              "min": "0",
+              "show": true
+            },
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            }
+          ]
+        },
+        {
+          "aliasColors": {
+            "AppLB avg": "#d683ce",
+            "TomEE avg": "#65c5db",
+            "avg": "#65c5db",
+            "tomee_access_log_tomee.mean": "#65c5db"
+          },
+          "bars": false,
+          "dashLength": 10,
+          "dashes": false,
+          "datasource": "$apache_region",
+          "fill": 0,
+          "id": 16,
+          "legend": {
+            "avg": false,
+            "current": false,
+            "max": false,
+            "min": false,
+            "show": true,
+            "total": false,
+            "values": false
+          },
+          "lines": true,
+          "linewidth": 1,
+          "links": [],
+          "nullPointMode": "null",
+          "percentage": false,
+          "pointradius": 5,
+          "points": false,
+          "renderer": "flot",
+          "seriesOverrides": [],
+          "spaceLength": 10,
+          "span": 4,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "alias": "200s",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT count(\"uripath\") FROM \"apache_access_log_apache\" WHERE (\"response_code\" >= 200 AND \"response_code\" < 300) AND (\"aarp_env\" =~ /^$aarp_env$/ AND \"aarp_role\" =~ /^ws(_appsec)?$/ AND \"domain\" =~ /^$login_aarp_org$/) AND $timeFilter GROUP BY time(10s) fill(0)",
+              "rawQuery": true,
+              "refId": "A",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            },
+            {
+              "alias": "300s",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT count(\"uripath\") FROM \"apache_access_log_apache\" WHERE (\"response_code\" >= 300 AND \"response_code\" < 400) AND (\"aarp_env\" =~ /^$aarp_env$/ AND \"aarp_role\" =~ /^ws(_appsec)?$/ AND \"domain\" =~ /^$login_aarp_org$/) AND $timeFilter GROUP BY time(10s) fill(0)",
+              "rawQuery": true,
+              "refId": "B",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            },
+            {
+              "alias": "400s",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT count(\"uripath\") FROM \"apache_access_log_apache\" WHERE (\"response_code\" >= 400 AND \"response_code\" < 500) AND (\"aarp_env\" =~ /^$aarp_env$/ AND \"aarp_role\" =~ /^ws(_appsec)?$/ AND \"domain\" =~ /^$login_aarp_org$/) AND $timeFilter GROUP BY time(10s) fill(0)",
+              "rawQuery": true,
+              "refId": "C",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            },
+            {
+              "alias": "500s",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT count(\"uripath\") FROM \"apache_access_log_apache\" WHERE (\"response_code\" >= 500 AND \"response_code\" < 600) AND (\"aarp_env\" =~ /^$aarp_env$/ AND \"aarp_role\" =~ /^ws(_appsec)?$/ AND \"domain\" =~ /^$login_aarp_org$/) AND $timeFilter GROUP BY time(10s) fill(0)",
+              "rawQuery": true,
+              "refId": "D",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            }
+          ],
+          "thresholds": [],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "Apache - 200s/300s/400s/500s",
+          "tooltip": {
+            "shared": true,
+            "sort": 0,
+            "value_type": "individual"
+          },
+          "type": "graph",
+          "xaxis": {
+            "buckets": null,
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": []
+          },
+          "yaxes": [
+            {
+              "format": "short",
+              "label": "10s interval",
+              "logBase": 1,
+              "max": null,
+              "min": "0",
+              "show": true
+            },
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            }
+          ]
+        },
+        {
+          "aliasColors": {
+            "AppLB avg": "#d683ce",
+            "TomEE avg": "#65c5db",
+            "avg": "#65c5db",
+            "tomee_access_log_tomee.mean": "#65c5db"
+          },
+          "bars": false,
+          "dashLength": 10,
+          "dashes": false,
+          "datasource": "-- Mixed --",
+          "fill": 0,
+          "id": 33,
+          "legend": {
+            "avg": false,
+            "current": false,
+            "max": false,
+            "min": false,
+            "show": true,
+            "total": false,
+            "values": false
+          },
+          "lines": true,
+          "linewidth": 1,
+          "links": [],
+          "nullPointMode": "null",
+          "percentage": false,
+          "pointradius": 5,
+          "points": false,
+          "renderer": "flot",
+          "seriesOverrides": [],
+          "spaceLength": 10,
+          "span": 4,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "alias": "TomEE avg",
+              "datasource": "$tomee_region",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT mean(\"response_time_milliseconds\") FROM \"tomee_access_log_tomee\" WHERE (\"aarp_env\" =~ /^$aarp_env$/ AND \"lcs_type\" = 'user-mgmt') AND $timeFilter GROUP BY time(10s)",
+              "rawQuery": true,
+              "refId": "B",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            },
+            {
+              "alias": "Apache avg",
+              "datasource": "$apache_region",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT mean(\"response_time_microseconds\")/1000 FROM \"apache_access_log_apache\" WHERE (\"aarp_env\" =~ /^$aarp_env$/ AND \"aarp_role\" =~ /^ws(_appsec)?$/ AND \"domain\" =~ /^$login_aarp_org$/) AND $timeFilter GROUP BY time(10s)",
+              "rawQuery": true,
+              "refId": "A",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            }
+          ],
+          "thresholds": [],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "Response Time",
+          "tooltip": {
+            "shared": true,
+            "sort": 0,
+            "value_type": "individual"
+          },
+          "type": "graph",
+          "xaxis": {
+            "buckets": null,
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": []
+          },
+          "yaxes": [
+            {
+              "format": "short",
+              "label": "Milliseconds",
+              "logBase": 1,
+              "max": null,
+              "min": "0",
+              "show": true
+            },
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            }
+          ]
+        }
+      ],
+      "repeat": null,
+      "repeatIteration": null,
+      "repeatRowId": null,
+      "showTitle": true,
+      "title": "login.aarp.org",
+      "titleSize": "h6"
+    }
+  ],
+  "schemaVersion": 14,
+  "style": "dark",
+  "tags": [],
+  "templating": {
+    "list": [
+      {
+        "allValue": null,
+        "current": {
+          "tags": [],
+          "text": "East",
+          "value": "East"
+        },
+        "hide": 0,
+        "includeAll": false,
+        "label": "",
+        "multi": false,
+        "name": "region",
+        "options": [
+          {
+            "selected": true,
+            "text": "East",
+            "value": "East"
+          },
+          {
+            "selected": false,
+            "text": "West",
+            "value": "West"
+          }
+        ],
+        "query": "East,West",
+        "type": "custom"
+      },
+      {
+        "allValue": null,
+        "current": {
+          "text": "prod",
+          "value": "prod"
+        },
+        "datasource": "$tomee_region",
+        "hide": 0,
+        "includeAll": false,
+        "label": "aarp_env",
+        "multi": false,
+        "name": "aarp_env",
+        "options": [],
+        "query": "show tag values with key = \"aarp_env\"",
+        "refresh": 1,
+        "regex": "/(dev|stage|qa|pre|pi|dr|prod)/",
+        "sort": 1,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
+        "current": {
+          "text": "AWS East",
+          "value": "AWS East"
+        },
+        "hide": 2,
+        "label": null,
+        "name": "aws_region",
+        "options": [],
+        "query": "influxdb",
+        "refresh": 1,
+        "regex": "AWS $region",
+        "type": "datasource"
+      },
+      {
+        "current": {
+          "text": "TomEE East",
+          "value": "TomEE East"
+        },
+        "hide": 2,
+        "label": null,
+        "name": "tomee_region",
+        "options": [],
+        "query": "influxdb",
+        "refresh": 1,
+        "regex": "TomEE $region",
+        "type": "datasource"
+      },
+      {
+        "current": {
+          "text": "Apache East",
+          "value": "Apache East"
+        },
+        "hide": 2,
+        "label": null,
+        "name": "apache_region",
+        "options": [],
+        "query": "influxdb",
+        "refresh": 1,
+        "regex": "Apache $region",
+        "type": "datasource"
+      },
+      {
+        "current": {
+          "text": "secure(-.)?\\.aarp\\.org",
+          "value": "secure(-.)?\\.aarp\\.org"
+        },
+        "hide": 2,
+        "label": null,
+        "name": "secure_aarp_org",
+        "options": [
+          {
+            "selected": true,
+            "text": "secure(-.)?\\.aarp\\.org",
+            "value": "secure(-.)?\\.aarp\\.org"
+          }
+        ],
+        "query": "secure(-.)?\\.aarp\\.org",
+        "type": "constant"
+      },
+      {
+        "current": {
+          "text": "www(-.)?\\.aarp\\.org",
+          "value": "www(-.)?\\.aarp\\.org"
+        },
+        "hide": 2,
+        "label": null,
+        "name": "www_aarp_org",
+        "options": [
+          {
+            "selected": true,
+            "text": "www(-.)?\\.aarp\\.org",
+            "value": "www(-.)?\\.aarp\\.org"
+          }
+        ],
+        "query": "www(-.)?\\.aarp\\.org",
+        "type": "constant"
+      },
+      {
+        "current": {
+          "text": "login(-.)?\\.aarp\\.org",
+          "value": "login(-.)?\\.aarp\\.org"
+        },
+        "hide": 2,
+        "label": null,
+        "name": "login_aarp_org",
+        "options": [
+          {
+            "selected": true,
+            "text": "login(-.)?\\.aarp\\.org",
+            "value": "login(-.)?\\.aarp\\.org"
+          }
+        ],
+        "query": "login(-.)?\\.aarp\\.org",
+        "type": "constant"
+      }
+    ]
+  },
+  "time": {
+    "from": "now-30m",
+    "to": "now"
+  },
+  "timepicker": {
+    "refresh_intervals": [
+      "5s",
+      "10s",
+      "30s",
+      "1m",
+      "5m",
+      "15m",
+      "30m",
+      "1h",
+      "2h",
+      "1d"
+    ],
+    "time_options": [
+      "5m",
+      "15m",
+      "1h",
+      "6h",
+      "12h",
+      "24h",
+      "2d",
+      "7d",
+      "30d"
+    ]
+  },
+  "timezone": "",
+  "title": "WS/AppSec High-Level Metrics",
+  "version": 32
+}
