@@ -1,0 +1,3 @@
+i am writing to a file from ruby
+aren't i special
+this will always append
