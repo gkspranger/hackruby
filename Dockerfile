@@ -1,9 +1,7 @@
-FROM ruby:2.6
+FROM ruby:2.6-stretch
 
-COPY src /ruby-src
+RUN echo 'alias ll="ls -al"' >> /root/.bashrc
 
-WORKDIR /ruby-src
+WORKDIR /ruby
 
-RUN bundle install
-
-CMD ["/bin/bash"]
+CMD [ "bash" ]
