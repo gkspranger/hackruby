@@ -1,0 +1,23 @@
+<html>
+    <head>
+        <script type="module">
+            import hotwiredTurbo from 'https://cdn.skypack.dev/@hotwired/turbo';
+        </script>
+    </head>
+    <body>
+        <h1>hello world</h1>
+
+        <a href="/test.html?abc=123">reload the page</a>
+
+
+        <turbo-frame id="messages" src="/new_messages">
+            this is the start of the turbo frame
+        </turbo-frame>
+
+        <turbo-frame id="linker">
+            <a href="/new_linker">link me</a>
+        </turbo-frame>
+
+
+    </body>
+</html>
